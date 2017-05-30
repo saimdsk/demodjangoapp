@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="DynamicFormApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bare - Start Bootstrap Template</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Start Bootstrap</a>
+            </div>
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Page Content -->
+    <div class="container" ng-controller="DynamicFormController">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="myForm" class="form-horizontal" role="form" ng-submit="submitForm()">
+                    <h3 class='text-center' style="text-decoration:underline; font-weight:600;">{{entity.question_List[0].question_section}}</h3><br>
+                    <div>
+                      <div ng-repeat="field in entity.question_List[0].questions[0].input">
+                          <ng-form name="form">
+                              <!-- TEXT FIELDS -->
+                              <div ng-if="field.fieldtype=='text'" class="form-group">
+                                  <label class="col-sm-4 control-label " style="text-align:left">{{field.fieldname}}</label>
+                                  <div class="col-sm-3">
+                                      <input type="text" dynamic-name="field.name" id="{{field.name}}" data-ng-model="field.data" class="form-control" required/>
+                                      <span data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.required'}}">Required!</span>
+                                  </div>
+                              </div>
+                          </ng-form>
+                      </div>
+                      <h4 style="text-decoration:underline; font-weight:600;">{{entity.question_List[0].questions[1].question_heading}}</h4>
+                      <ng-form name="form">
+                          <!-- RADIO FIELDS -->
+                          <div class="form-group">
+                              <label class="col-sm-12 control-label" style="text-align:left;">{{entity.question_List[0].questions[1].dependent_question[0].question_text}}</label>
+                              <div class="col-sm-6">
+                                  <div class="checkbox pull-left">
+                                      <label>
+                                          <input type="radio" data-ng-model="field.data" name="taskGroup" id="yes" value="Yes">Yes
+                                      </label>
+                                  </div>
+                                  <div class="checkbox">
+                                      <label>
+                                          <input type="radio" data-ng-model="field.data" name="taskGroup" id="No" value="No">No
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">if YES, please attach following:</label>
+                              <div class="col-sm-6">
+                                  <div class="checkbox" ng-repeat="option in entity.question_List[0].questions[1].dependent_question[0].checkList">
+                                      <label>
+                                          <input type="checkbox" data-ng-model="option.data" name="taskGroup" id="{{option.fieldname}}" value="{{option.id}}">{{option.fieldname}}
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </ng-form>
+                      <h4 style="text-decoration:underline; font-weight:600;">{{entity.question_List[0].questions[2].question_heading}}</h4>
+                      <p>{{entity.question_List[0].questions[2].question_text}}</p>
+                      <div class="row">
+                          <div class="col-xs-12">
+                              <div class="table-responsive">
+                                  <table class="table table-bordered table-hover">
+                                      <caption>{{entity.question_List[0].questions[2].question_help_text}}</caption>
+                                      <thead>
+                                          <tr>
+                                              <th ng-repeat="field in entity.question_List[0].questions[2].tableHeader">{{field.name}}</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr ng-repeat="field in entity.question_List[0].questions[2].tableData">
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <!--end of .table-responsive-->
+                          </div>
+                      </div>
+                      <h4 style="text-decoration:underline; font-weight:600;"> {{entity.question_List[0].questions[3].question_heading}}</h4>
+                      <div class="row">
+                          <div class="col-xs-12">
+                              <div class="table-responsive">
+                                  <table class="table table-bordered table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th ng-repeat="field in entity.question_List[0].questions[3].tableHeader">{{field.name}}</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr ng-repeat="field in entity.question_List[0].questions[3].tableData">
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                              <td>{{field.name}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <!--end of .table-responsive-->
+                          </div>
+                      </div>
+                  </div>
+                    <h3 class='text-center' style="text-decoration:underline; font-weight:600;">{{entity.question_List[1].question_section}}</h3>
+                    <p style="font-style: italic;">{{entity.question_List[1].question_section_help_text}}</p>
+                    <div ng-repeat="field in entity.question_List[1].questions">
+                        <ng-form name="form">
+                            <!-- RADIO FIELDS -->
+                            <div class="form-group">
+                                <h4 style="text-decoration:underline; font-weight:600;">{{field.question_heading}}</h4>
+                                <label class="col-sm-12 control-label" style="text-align:left;">{{field.question_text}}</label>
+                                <div class="checkbox pull-left" ng-repeat="option in field.values">
+                                    <label>
+                                        <input type="radio" data-ng-model="option.data" name="taskGroup" id="{{option.typeValue}}" value="{{option.id}}">{{option.typeValue}}
+                                    </label>
+                                </div>
+                                <!-- <div class="col-sm-6">
+                                    <div class="radio pull-left">
+                                        <label>
+                                            <input type="radio" data-ng-model="field.data" name="taskGroup" id="yes" value="Yes">Yes
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" data-ng-model="field.data" name="taskGroup" id="No" value="No">No
+                                        </label>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </ng-form>
+                        <ng-form name="form">
+                            <div class="form-group" style="margin-left:35px; color:darkgray;" ng-repeat="option in field.dependent_question">
+                                <label class="col-sm-12 control-label" style="text-align:left;">{{ option.question_text}}</label>
+                                <!-- <div class="col-sm-2">
+                                    <div class="radio pull-left">
+                                        <label>
+                                            <input type="radio" data-ng-model="field.data1" name="taskGroupYes" id="yes1" value="Yes">Yes
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" data-ng-model="field.data1" name="taskGroupYes" id="No1" value="No">No
+                                        </label>
+                                    </div>
+                                </div> -->
+                                <div class="checkbox pull-left" ng-repeat="let in option.values">
+                                    <label>
+                                        <input type="radio" data-ng-model="let.data" name="lettaskGroup" id="{{let.typeValue}}" value="{{let.id}}">{{let.typeValue}}
+                                    </label>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+                    <h3 class='text-center' style="text-decoration:underline; font-weight:600;">{{entity.question_List[2].question_section}}</h3>
+                    <h4 style="text-decoration:underline; font-weight:600;">{{entity.question_List[2].questions[0].question_heading}}</h4>
+                    <div>
+                        <ng-form name="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-6">
+                                    <div class="checkbox" ng-repeat="option in entity.question_List[2].questions[0].dependent_question[0].checkList">
+                                        <label>
+                                            <input type="checkbox" data-ng-model="option.data" name="taskGroup" id="{{option.fieldname}}" value="{{option.id}}">{{option.fieldname}}
+                                        </label>
+                                        <div ng-if="option.help_text1" class="form-group">
+                                            <label class="col-sm-4 control-label">{{option.help_text1}}</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" dynamic-name="option.help_text1" id="{{option.help_text1}}" data-ng-model="option.data" class="form-control" required/>
+                                                <span data-ng-show=" {{'form.'+option.name+'.$dirty && option.'+field.fieldname+'.$error.required'}}">Required!</span>
+                                            </div>
+                                        </div>
+                                        <div ng-if="option.help_text2" class="form-group">
+                                            <label class="col-sm-4 control-label">{{option.help_text2}}</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" dynamic-name="field.help_text2" id="{{field.help_text1}}" data-ng-model="field.data" class="form-control" required/>
+                                                <span data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.required'}}">Required!</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-repeat="field in entity.question_List[2].questions[1].input">
+                                <ng-form name="form">
+                                    <!-- TEXT FIELDS -->
+                                    <div ng-if="field.fieldtype=='text'" class="form-group">
+                                        <label class="col-sm-4 control-label">{{entity.question_List[2].questions[1].question_heading}}</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" dynamic-name="field.name" id="{{field.name}}" data-ng-model="field.data" class="form-control" required/>
+                                            <span data-ng-show=" {{'form.'+field.name+'.$dirty && form.'+field.name+'.$error.required'}}">Required!</span>
+                                        </div>
+                                    </div>
+                                </ng-form>
+                            </div>
+                        </ng-form>
+                    </div>
+                    <h4 style="text-decoration:underline; font-weight:600;">{{entity.question_List[2].questions[2].question_heading}}</h4>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <caption>{{entity.question_List[2].questions[2].question_help_text}}</caption>
+                                    <thead>
+                                        <tr>
+                                            <th ng-repeat="field in entity.question_List[2].questions[2].tableHeader">{{field.name}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="field in entity.question_List[2].questions[2].tableData">
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end of .table-responsive-->
+                        </div>
+                    </div>
+                    <h4 style="text-decoration:underline; font-weight:600;">{{entity.question_List[2].questions[3].question_heading}}</h4>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-repeat="field in entity.question_List[2].questions[3].tableHeader">{{field.name}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="field in entity.question_List[2].questions[3].tableData">
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                            <td>{{field.name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--end of .table-responsive-->
+                        </div>
+                    </div>
+                    <button ng-disabled="myForm.$invalid" type="submit" id="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://code.angularjs.org/1.3.0-beta.5/angular.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
